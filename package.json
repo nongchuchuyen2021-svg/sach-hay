@@ -1,0 +1,21 @@
+{
+  "name": "sach-hay",
+  "version": "1.0.0",
+  "description": "Tủ Sách Hay - Nền tảng đọc sách điện tử trực tuyến, tinh hoa tri thức & tư duy tuyển chọn",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx serve ."
+  },
+  "keywords": [
+    "sach-hay",
+    "ebook",
+    "khong-tu",
+    "triet-hoc",
+    "tai-chinh",
+    "ky-nang",
+    "reader"
+  ],
+  "author": "Tủ Sách Hay",
+  "license": "MIT"
+}

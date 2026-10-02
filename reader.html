@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="sepia" data-font="serif" data-size="19" data-spacing="normal" data-width="normal">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Đọc Sách - Tủ Sách Hay</title>
+  <meta name="description" content="Trình đọc sách điện tử chất lượng cao, hỗ trợ chế độ ban đêm chống chói, tăng giảm cỡ chữ, đồng bộ tiến trình đọc.">
+  <meta name="theme-color" content="#f5eedf">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%239e2a2b%22/><text y=%2268%22 x=%2250%22 text-anchor=%22middle%22 font-size=%2256%22 fill=%22%23f5eedf%22 font-family=%22serif%22 font-weight=%22bold%22>書</text></svg>">
+
+  <!-- Google Fonts: Playfair Display, Lora, Be Vietnam Pro -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/reader.css">
+</head>
+<body>
+
+  <!-- Reading Progress Bar -->
+  <div id="progress-container">
+    <div id="progress-bar"></div>
+  </div>
+
+  <!-- Reader App Bar -->
+  <header class="app-header">
+    <div class="header-left">
+      <!-- Back to Bookshelf -->
+      <a href="index.html" class="icon-btn back-to-shelf" aria-label="Quay lại Kệ Sách" title="Quay lại Kệ Sách">
+        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        <span class="btn-text-desktop">Kệ Sách</span>
+      </a>
+
+      <!-- Open TOC button -->
+      <button id="btn-toggle-toc" class="icon-btn" aria-label="Mở mục lục" title="Mục lục sách">
+        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+        <span class="btn-text-desktop">Mục lục</span>
+      </button>
+
+      <div class="header-title-box">
+        <span id="header-book-title" class="book-mini-title">TRÍ TUỆ KHỔNG TỬ</span>
+        <span id="header-chapter-name" class="header-chapter-title">Lời mở đầu</span>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <button id="btn-search-toggle" class="icon-btn" aria-label="Tìm kiếm trong sách" title="Tìm kiếm câu chuyện">
+        <svg viewBox="0 0 24 24" width="19" height="19" stroke="currentColor" stroke-width="2" fill="none">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </button>
+
+      <button id="btn-quick-theme" class="icon-btn" aria-label="Đổi chế độ ban đêm" title="Chuyển chế độ ban đêm / ban ngày">
+        <svg class="theme-icon-dark" viewBox="0 0 24 24" width="19" height="19" stroke="currentColor" stroke-width="2" fill="none">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
+
+      <button id="btn-settings-toggle" class="icon-btn" aria-label="Tùy chỉnh cỡ chữ & màu sắc" title="Tùy biến chữ & giao diện">
+        <span class="font-settings-icon">Aa</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Layout -->
+  <div class="main-wrapper">
+    <!-- Sidebar / Drawer TOC -->
+    <aside id="sidebar-toc" class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-brand">
+          <div id="sidebar-seal-icon" class="seal-icon">孔</div>
+          <div>
+            <h3 id="sidebar-book-title">Trí Tuệ Khổng Tử</h3>
+            <p id="sidebar-book-meta" class="sidebar-subtitle">91 thiên triết lý & câu chuyện</p>
+          </div>
+        </div>
+        <button id="btn-close-toc" class="close-btn" aria-label="Đóng mục lục">
+          <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Quick Search inside Sidebar -->
+      <div class="sidebar-search">
+        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="toc-search-input" placeholder="Tìm câu chuyện, chủ đề...">
+        <button id="btn-clear-search" class="clear-search-btn" style="display:none;">&times;</button>
+      </div>
+
+      <!-- Part filter tabs -->
+      <div class="part-filters" id="part-filters-container">
+        <!-- Dynamically filled -->
+      </div>
+
+      <!-- Chapter List -->
+      <nav class="toc-list" id="toc-list-container">
+        <!-- Dynamically rendered chapters -->
+      </nav>
+    </aside>
+
+    <!-- Overlay when sidebar or settings is open on mobile -->
+    <div id="drawer-overlay" class="drawer-overlay"></div>
+
+    <!-- Reader Container -->
+    <main id="reader-container" class="reader-container">
+      <article id="reading-content" class="reading-article">
+        <!-- Chapter Content Injected via JS -->
+      </article>
+
+      <!-- Bottom Chapter Navigation -->
+      <nav class="chapter-navigation" aria-label="Điều hướng chương">
+        <button id="btn-prev-chapter" class="nav-chapter-btn prev" title="Chương trước">
+          <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+          <div class="nav-btn-text">
+            <span class="nav-label">Chương trước</span>
+            <span id="prev-chapter-title" class="nav-target-title">--</span>
+          </div>
+        </button>
+
+        <button id="btn-next-chapter" class="nav-chapter-btn next" title="Chương kế tiếp">
+          <div class="nav-btn-text text-right">
+            <span class="nav-label">Chương kế tiếp</span>
+            <span id="next-chapter-title" class="nav-target-title">--</span>
+          </div>
+          <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </nav>
+
+      <!-- Reader Footer -->
+      <footer class="reader-footer">
+        <div class="seal-mark">
+          <span id="footer-seal-name">Tủ Sách Hay &bull; Số Hóa</span>
+        </div>
+        <p id="footer-book-details">Tác phẩm: <strong>Trí Tuệ Khổng Tử</strong></p>
+        <p class="copyright-note">Được số hóa phục vụ mục đích học tập, nghiên cứu và đọc sách cá nhân.</p>
+        <p><a href="index.html" style="color: var(--accent-gold); text-decoration: underline; font-size: 0.85rem;">⬅ Trở về Kệ Sách Hay</a></p>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Settings Modal / Bottom Sheet -->
+  <div id="settings-panel" class="settings-modal" role="dialog" aria-modal="true" aria-labelledby="settings-heading">
+    <div class="settings-header">
+      <h3 id="settings-heading">Tùy biến hiển thị</h3>
+      <button id="btn-close-settings" class="close-btn" aria-label="Đóng tùy chỉnh">
+        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div class="settings-body">
+      <!-- Theme Selection (4 eye-friendly themes) -->
+      <div class="setting-group">
+        <label class="setting-label">Màu sắc giao diện (Bảo vệ mắt)</label>
+        <div class="theme-options">
+          <button class="theme-card sepia active" data-set-theme="sepia">
+            <span class="color-dot sepia-dot"></span>
+            <span class="theme-name">Trầm mặc</span>
+            <span class="theme-hint">Giấy cổ dịu mắt</span>
+          </button>
+          
+          <button class="theme-card dark" data-set-theme="dark">
+            <span class="color-dot dark-dot"></span>
+            <span class="theme-name">Đêm sâu</span>
+            <span class="theme-hint">Chống chói ban đêm</span>
+          </button>
+          
+          <button class="theme-card sage" data-set-theme="sage">
+            <span class="color-dot sage-dot"></span>
+            <span class="theme-name">Trúc ngọc</span>
+            <span class="theme-hint">Thư giãn thị giác</span>
+          </button>
+
+          <button class="theme-card light" data-set-theme="light">
+            <span class="color-dot light-dot"></span>
+            <span class="theme-name">Sáng thanh</span>
+            <span class="theme-hint">Đọc ban ngày</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Font Size -->
+      <div class="setting-group">
+        <div class="setting-label-row">
+          <label class="setting-label">Cỡ chữ đọc sách</label>
+          <span id="font-size-display" class="setting-value">19 px</span>
+        </div>
+        <div class="size-controls">
+          <button id="btn-size-dec" class="ctrl-btn" aria-label="Giảm cỡ chữ">A-</button>
+          <div class="size-slider-wrap">
+            <input type="range" id="size-slider" min="15" max="25" step="1" value="19">
+          </div>
+          <button id="btn-size-inc" class="ctrl-btn" aria-label="Tăng cỡ chữ">A+</button>
+        </div>
+      </div>
+
+      <!-- Font Family -->
+      <div class="setting-group">
+        <label class="setting-label">Kiểu chữ (Phông chữ)</label>
+        <div class="toggle-button-group">
+          <button class="choice-btn active" data-set-font="serif">
+            <span style="font-family: 'Lora', serif; font-size: 1.05rem;">Chân phương (Serif)</span>
+          </button>
+          <button class="choice-btn" data-set-font="sans">
+            <span style="font-family: 'Be Vietnam Pro', sans-serif;">Hiện đại (Sans)</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Line Spacing -->
+      <div class="setting-group">
+        <label class="setting-label">Khoảng cách dòng</label>
+        <div class="toggle-button-group three-cols">
+          <button class="choice-btn" data-set-spacing="compact">Gọn</button>
+          <button class="choice-btn active" data-set-spacing="normal">Vừa vặn</button>
+          <button class="choice-btn" data-set-spacing="relaxed">Thư thả</button>
+        </div>
+      </div>
+
+      <!-- Reading Width -->
+      <div class="setting-group">
+        <label class="setting-label">Độ rộng trang đọc</label>
+        <div class="toggle-button-group three-cols">
+          <button class="choice-btn" data-set-width="narrow">Hẹp (640px)</button>
+          <button class="choice-btn active" data-set-width="normal">Chuẩn (740px)</button>
+          <button class="choice-btn" data-set-width="wide">Rộng (860px)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Floating Bar (Mobile & Desktop) -->
+  <div class="bottom-dock">
+    <div class="dock-content">
+      <button id="dock-btn-prev" class="dock-btn" aria-label="Chương trước" title="Chương trước">
+        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+
+      <div class="dock-center" id="dock-chapter-indicator" title="Nhấp để mở danh sách chương">
+        <span id="dock-chapter-num">Chương 1 / 91</span>
+        <span id="dock-progress-percent">0%</span>
+      </div>
+
+      <button id="dock-btn-next" class="dock-btn" aria-label="Chương sau" title="Chương sau">
+        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+
+      <button id="btn-scroll-top" class="dock-btn scroll-top" aria-label="Lên đầu trang" title="Lên đầu trang">
+        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none">
+          <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Data & Logic Scripts -->
+  <script src="js/books-catalog.js"></script>
+  <script src="data/books/tri-tue-khong-tu.js"></script>
+  <script src="js/reader.js"></script>
+</body>
+</html>
