@@ -33,7 +33,8 @@ sach-hay/
 
 | STT | Tên sách | Tác giả | Thể loại | Trạng thái |
 | :---: | :--- | :--- | :--- | :---: |
-| 1 | **Trí Tuệ Khổng Tử** | Khổng Tử (NXB Văn Hóa - TT) | Triết học Á Đông | ✅ **Đã hoàn thành 100% (91 chương)** |
+| 1 | **5 Phút Thuộc Bài** | Nguyễn Phùng Phong & Brahmi Nguyễn | Phương pháp học tập | ✅ **Đã hoàn thành 100% (24 chương & 189 ảnh gốc)** |
+| 2 | **Trí Tuệ Khổng Tử** | Khổng Tử (NXB Văn Hóa - TT) | Triết học Á Đông | ✅ **Đã hoàn thành 100% (91 chương)** |
 | 2 | **Đọc Sách Siêu Tốc** | Christian Grüning | Kỹ năng học tập | ⏳ Sắp cập nhật bản web |
 | 3 | **Dạy Con Làm Giàu (Tập 1)** | Robert Kiyosaki | Tài chính & Làm giàu | ⏳ Sắp cập nhật bản web |
 | 4 | **Đừng Bao Giờ Đi Ăn Một Mình** | Keith Ferrazzi | Phát triển bản thân | ⏳ Sắp cập nhật bản web |

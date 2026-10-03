@@ -120,8 +120,9 @@
     let html = '';
     filtered.forEach(book => {
       const isReady = book.status === 'ready';
-      const readUrl = `reader.html?book=${book.id}`;
+      const readUrl = book.customUrl || `reader.html?book=${book.id}`;
       const tagClass = isReady ? 'ready' : 'ready-soon';
+      const chaptersText = book.totalChapters.toString().includes('Chương') ? book.totalChapters : `${book.totalChapters} chương`;
 
       html += `
         <article class="book-card">
@@ -151,7 +152,7 @@
                      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
                      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
                    </svg>
-                   <span>Đọc trực tuyến (${book.totalChapters} chương)</span>
+                   <span>Đọc trực tuyến (${chaptersText})</span>
                  </a>`
               : `<button class="btn-card-secondary" onclick="alert('Cuốn sách: \\'${escapeHtml(book.title)}\\' hiện đang được số hóa các chương tiếp theo. Bản PDF gốc đã có trong tủ sách máy tính của bạn.')">
                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none">
@@ -220,7 +221,30 @@
     return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D');
   }
 
+  // Featured Tabs Switcher
+  const btnTab5ptb = document.getElementById('btn-tab-5ptb');
+  const btnTabKhongTu = document.getElementById('btn-tab-khongtu');
+  const feat5ptb = document.getElementById('feat-5ptb');
+  const featKhongTu = document.getElementById('feat-khongtu');
+
+  if (btnTab5ptb && btnTabKhongTu && feat5ptb && featKhongTu) {
+    btnTab5ptb.addEventListener('click', () => {
+      btnTab5ptb.classList.add('active');
+      btnTabKhongTu.classList.remove('active');
+      feat5ptb.style.display = 'flex';
+      featKhongTu.style.display = 'none';
+    });
+
+    btnTabKhongTu.addEventListener('click', () => {
+      btnTabKhongTu.classList.add('active');
+      btnTab5ptb.classList.remove('active');
+      featKhongTu.style.display = 'flex';
+      feat5ptb.style.display = 'none';
+    });
+  }
+
   // Initial load
   checkContinueReading();
   renderBooks();
 })();
+

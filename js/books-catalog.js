@@ -5,6 +5,22 @@
 
 window.BOOKS_CATALOG = [
   {
+    id: "5-phut-thuoc-bai",
+    title: "5 Phút Thuộc Bài",
+    author: "Nguyễn Phùng Phong & Brahmi Nguyễn",
+    category: "Phương pháp học tập",
+    categorySlug: "ky-nang",
+    tag: "Đã có bản đọc web (100% Ảnh gốc)",
+    status: "ready",
+    dataFile: "data/books/5-phut-thuoc-bai.js",
+    totalChapters: 29,
+    coverBadge: "🐘",
+    coverTheme: "vibrant-amber",
+    year: "Tái bản lần 6",
+    shortDesc: "Học nhẹ nhàng - Nhớ dễ dàng: Quy trình 6-3-4, mã hóa 100 con số 00-99, 26 chữ cái và 11 phương pháp siêu trí nhớ kèm 189 trang tranh ảnh gốc.",
+    highlights: ["189 trang tranh ảnh gốc siêu nét", "Quy trình 6-3-4 học thông minh", "Mã hóa 100 số & 11 phương pháp nhớ"]
+  },
+  {
     id: "tri-tue-khong-tu",
     title: "Trí Tuệ Khổng Tử",
     author: "Khổng Tử (Biên soạn: NXB Văn Hóa - Thông Tin)",

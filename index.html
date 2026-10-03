@@ -58,6 +58,10 @@
           <span class="btn-label-desktop">Ban đêm</span>
         </button>
 
+        <a href="reader.html?book=5-phut-thuoc-bai" class="btn-read-now" style="background: linear-gradient(135deg, #FF6B35, #E63946); color: #FFF; border: none;" title="Đọc 5 Phút Thuộc Bài (Đầy đủ 189 ảnh gốc)">
+          <span>🐘 5' Thuộc Bài</span>
+        </a>
+
         <a href="reader.html?book=tri-tue-khong-tu" class="btn-read-now">
           <span>Đọc Khổng Tử</span>
           <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none">
@@ -76,12 +80,12 @@
     <section class="hero-section">
       <div class="hero-content">
         <div class="hero-tag">
-          <span class="seal-mini">孔</span>
-          <span>Sách Mới Cập Nhật &bull; Bản Đọc Web 100%</span>
+          <span class="seal-mini">🐘</span>
+          <span>Sách Mới &bull; 5 Phút Thuộc Bài (100% Ảnh Gốc & Tương Tác)</span>
         </div>
         <h1 class="hero-title">Khám Phá Tinh Hoa Tri Thức Cùng <span class="highlight">Tủ Sách Hay</span></h1>
         <p class="hero-desc">
-          Nền tảng đọc sách điện tử trực tuyến được thiết kế chuyên biệt cho trải nghiệm đọc thư thái: hỗ trợ chế độ đọc ban đêm chống chói, tùy biến kích cỡ phông chữ linh hoạt, tối ưu trên cả điện thoại và máy tính.
+          Nền tảng đọc sách điện tử trực tuyến tuyển chọn: từ cẩm nang siêu trí nhớ học đường <strong>5 Phút Thuộc Bài</strong> đến kinh điển triết học <strong>Trí Tuệ Khổng Tử</strong>. Trải nghiệm tối ưu trên mọi thiết bị.
         </p>
 
         <!-- Continue Reading Box (If exists in localStorage) -->
@@ -100,28 +104,61 @@
         </div>
       </div>
 
-      <!-- Featured Book Card in Hero -->
+      <!-- Featured Book Card in Hero with Tab Switcher -->
       <div class="hero-featured-card">
-        <div class="featured-badge">Tác Phẩm Nổi Bật</div>
-        <div class="featured-cover eastern-red">
-          <div class="cover-seal">孔</div>
-          <div class="cover-title">TRÍ TUỆ KHỔNG TỬ</div>
-          <div class="cover-author">Khổng Tử & Môn Đồ</div>
-          <div class="cover-meta">91 Thiên Triết Lý</div>
+        <div class="featured-tabs-nav">
+          <button class="feat-tab-btn active" id="btn-tab-5ptb" type="button">🐘 5 Phút Thuộc Bài (Mới)</button>
+          <button class="feat-tab-btn" id="btn-tab-khongtu" type="button">孔 Trí Tuệ Khổng Tử</button>
         </div>
-        <div class="featured-details">
-          <h3>Trí Tuệ Khổng Tử</h3>
-          <p class="featured-cat">Triết học Á Đông &bull; NXB Văn Hóa - Thông Tin</p>
-          <p class="featured-text">
-            Đúc kết 91 câu chuyện nhân sinh, phép tu thân của bậc quân tử, đạo trị quốc và thuật xử thế điềm tĩnh, sâu sắc.
-          </p>
-          <a href="reader.html?book=tri-tue-khong-tu" class="btn-feature-read">
-            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none">
-              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-            </svg>
-            <span>Đọc sách trực tuyến (91 chương)</span>
-          </a>
+
+        <!-- 5PTB View (Active by default) -->
+        <div class="feat-content" id="feat-5ptb">
+          <div class="featured-badge" style="background: linear-gradient(135deg, #FF6B35, #E63946);">Mới Cập Nhật • 100% Ảnh Gốc</div>
+          <div class="featured-cover vibrant-amber">
+            <div class="cover-seal">🐘</div>
+            <div class="cover-title">5 PHÚT THUỘC BÀI</div>
+            <div class="cover-author">Nguyễn Phùng Phong</div>
+            <div class="cover-meta">189 Trang Gốc</div>
+          </div>
+          <div class="featured-details">
+            <h3>5 Phút Thuộc Bài</h3>
+            <p class="featured-cat">Siêu Trí Nhớ Học Đường &bull; Kỷ Lục Gia Thế Giới</p>
+            <p class="featured-text">
+              Học nhẹ nhàng - Nhớ dễ dàng: Quy trình 6-3-4, mã hóa 100 con số 00-99, 26 chữ cái và 11 phương pháp siêu trí nhớ kèm 189 trang tranh ảnh gốc.
+            </p>
+            <a href="reader.html?book=5-phut-thuoc-bai" class="btn-feature-read" style="background: linear-gradient(135deg, #FF6B35, #E63946);">
+              <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+              </svg>
+              <span>Đọc sách trực tuyến (29 chương & 189 ảnh gốc) ➔</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Khổng Tử View -->
+        <div class="feat-content" id="feat-khongtu" style="display: none;">
+          <div class="featured-badge">Kinh Điển Tuyển Chọn</div>
+          <div class="featured-cover eastern-red">
+            <div class="cover-seal">孔</div>
+            <div class="cover-title">TRÍ TUỆ KHỔNG TỬ</div>
+            <div class="cover-author">Khổng Tử & Môn Đồ</div>
+            <div class="cover-meta">91 Thiên Triết Lý</div>
+          </div>
+          <div class="featured-details">
+            <h3>Trí Tuệ Khổng Tử</h3>
+            <p class="featured-cat">Triết học Á Đông &bull; NXB Văn Hóa - Thông Tin</p>
+            <p class="featured-text">
+              Đúc kết 91 câu chuyện nhân sinh, phép tu thân của bậc quân tử, đạo trị quốc và thuật xử thế điềm tĩnh, sâu sắc.
+            </p>
+            <a href="reader.html?book=tri-tue-khong-tu" class="btn-feature-read">
+              <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+              </svg>
+              <span>Đọc sách trực tuyến (91 chương)</span>
+            </a>
+          </div>
         </div>
       </div>
     </section>

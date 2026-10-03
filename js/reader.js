@@ -131,7 +131,7 @@
   document.title = `${currentBook.title} - Tủ Sách Hay`;
   if (headerBookTitle) headerBookTitle.textContent = currentBook.title.toUpperCase();
   if (sidebarBookTitle) sidebarBookTitle.textContent = currentBook.title;
-  if (sidebarBookMeta) sidebarBookMeta.textContent = `${chapters.length} chương & điển tích`;
+  if (sidebarBookMeta) sidebarBookMeta.textContent = currentBook.id === 'tri-tue-khong-tu' ? `${chapters.length} thiên triết lý & câu chuyện` : `${chapters.length} chương cẩm nang & kỹ năng`;
   if (sidebarSealIcon && currentBook.coverBadge) sidebarSealIcon.textContent = currentBook.coverBadge;
   if (footerSealName) footerSealName.textContent = currentBook.title;
   if (footerBookDetails) footerBookDetails.innerHTML = `Tác phẩm: <strong>${escapeHtml(currentBook.title)}</strong> &bull; ${escapeHtml(currentBook.author)}`;
@@ -200,7 +200,16 @@
     dockProgressPercent.textContent = `${overallPercent}%`;
 
     // Build Content HTML
-    let html = `
+    let html = '';
+    if (chap.printed_page) {
+      html += `
+        <div class="sgk-pagehead">
+          <span class="sgk-pagehead-badge">5 Phút Thuộc Bài</span>
+          <span class="sgk-pagehead-page">Trang in: ${escapeHtml(chap.printed_page)}</span>
+        </div>
+      `;
+    }
+    html += `
       <header class="chapter-header">
         <div class="part-tag">
           <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none">
@@ -222,7 +231,8 @@
           <span class="chapter-meta-item">&bull;</span>
           <span class="chapter-meta-item">${chap.word_count} chữ</span>
           <span class="chapter-meta-item">&bull;</span>
-          <span class="chapter-meta-item">Thiên thứ ${index + 1}</span>
+          <span class="chapter-meta-item">${currentBook.id === 'tri-tue-khong-tu' ? 'Thiên' : 'Chương'} thứ ${index + 1}</span>
+          ${chap.printed_page ? `<span class="chapter-meta-item">&bull;</span><span class="chapter-meta-item">Trang in ${escapeHtml(chap.printed_page)}</span>` : ''}
         </div>
       </header>
     `;
@@ -233,7 +243,76 @@
       const type = pObj.type;
       const content = pObj.content;
 
-      if (type === 'quote') {
+      if (type === 'image') {
+        const caption = pObj.caption || 'Trang sách gốc';
+        const imgUrl = pObj.url;
+        html += `
+          <figure class="reader-page-figure">
+            <div class="reader-page-img-wrap" onclick="window.openReaderLightbox('${escapeHtml(imgUrl)}', '${escapeHtml(caption)}')" title="Nhấp để phóng to toàn màn hình">
+              <img src="${escapeHtml(imgUrl)}" alt="${escapeHtml(caption)}" loading="lazy" class="reader-page-img">
+              <div class="reader-zoom-hint">
+                <svg viewBox="0 0 24 24" width="15" height="15" stroke="currentColor" stroke-width="2" fill="none">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                  <line x1="11" y1="8" x2="11" y2="14"></line>
+                  <line x1="8" y1="11" x2="14" y2="11"></line>
+                </svg>
+                <span>Phóng to nét chuẩn</span>
+              </div>
+            </div>
+            <figcaption class="reader-page-caption">${escapeHtml(caption)}</figcaption>
+          </figure>
+        `;
+      } else if (type === 'goals') {
+        const items = Array.isArray(pObj.items) ? pObj.items : (content ? [content] : []);
+        html += `
+          <div class="sgk-goals">
+            <div class="sgk-goals-title">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+              <span>${escapeHtml(pObj.title || 'MỤC TIÊU BÀI HỌC (SAU BÀI NÀY EM SẼ)')}</span>
+            </div>
+            <ul>
+              ${items.map(it => `<li>${escapeHtml(it)}</li>`).join('')}
+            </ul>
+          </div>
+        `;
+      } else if (type === 'takeaway' || type === 'highlight') {
+        html += `
+          <div class="sgk-takeaway">
+            <div class="sgk-takeaway-title">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
+              <span>${escapeHtml(pObj.title || 'BÍ QUYẾT GHI NHỚ VÀNG')}</span>
+            </div>
+            <p>${escapeHtml(content || pObj.text || '')}</p>
+          </div>
+        `;
+      } else if (type === 'step') {
+        html += `
+          <div class="sgk-step-card">
+            <div class="sgk-step-num">${escapeHtml(String(pObj.step || '✓'))}</div>
+            <div class="sgk-step-body">
+              <div class="sgk-step-title">${escapeHtml(pObj.title || '')}</div>
+              <p class="sgk-step-desc">${escapeHtml(content || pObj.text || '')}</p>
+            </div>
+          </div>
+        `;
+      } else if (type === 'heading') {
+        html += `<h2 class="sgk-heading">${escapeHtml(content || '')}</h2>`;
+      } else if (type === 'subheading') {
+        html += `<h3 class="sgk-subheading">${escapeHtml(content || '')}</h3>`;
+      } else if (type === 'intro') {
+        html += `<div class="sgk-intro">${escapeHtml(content || '')}</div>`;
+      } else if (type === 'activity') {
+        html += `
+          <div class="sgk-activity">
+            <div class="sgk-activity-title">
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+              <span>${escapeHtml(pObj.title || 'THỬ THÁCH & CÂU HỎI TƯ DUY')}</span>
+            </div>
+            <p>${escapeHtml(content || '')}</p>
+          </div>
+        `;
+      } else if (type === 'quote') {
         const quoteMatch = content.match(/^(.*?)(-\s*["“].*?["”].*?)$/s);
         if (quoteMatch) {
           html += `
@@ -250,6 +329,7 @@
           `;
         }
       } else if (type === 'commentary') {
+        const badgeLabel = currentBook.id === 'tri-tue-khong-tu' ? 'Lời bình & Đúc kết triết lý' : 'Đúc kết & Bí quyết phương pháp';
         html += `
           <div class="commentary-box">
             <div class="commentary-badge">
@@ -258,7 +338,7 @@
                 <line x1="12" y1="16" x2="12" y2="12"></line>
                 <line x1="12" y1="8" x2="12.01" y2="8"></line>
               </svg>
-              <span>Lời bình & Đúc kết triết lý</span>
+              <span>${badgeLabel}</span>
             </div>
             <p>${escapeHtml(content)}</p>
           </div>
@@ -589,10 +669,46 @@
     return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D');
   }
 
-  // 13. App Launch
+  // 13. Lightbox Modal for Page Scans & Images
+  let readerLightbox = document.getElementById('reader-lightbox');
+  if (!readerLightbox) {
+    readerLightbox = document.createElement('div');
+    readerLightbox.id = 'reader-lightbox';
+    readerLightbox.className = 'reader-lightbox-modal';
+    readerLightbox.innerHTML = `
+      <div class="lightbox-backdrop"></div>
+      <div class="lightbox-content">
+        <button class="lightbox-close-btn" aria-label="Đóng (Esc)">&times;</button>
+        <img src="" alt="" class="lightbox-img">
+        <p class="lightbox-caption"></p>
+      </div>
+    `;
+    document.body.appendChild(readerLightbox);
+
+    const closeBtn = readerLightbox.querySelector('.lightbox-close-btn');
+    const backdrop = readerLightbox.querySelector('.lightbox-backdrop');
+    const closeLightbox = () => readerLightbox.classList.remove('open');
+    closeBtn.addEventListener('click', closeLightbox);
+    backdrop.addEventListener('click', closeLightbox);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && readerLightbox.classList.contains('open')) closeLightbox();
+    });
+  }
+
+  window.openReaderLightbox = function (url, caption) {
+    if (!readerLightbox) return;
+    const img = readerLightbox.querySelector('.lightbox-img');
+    const cap = readerLightbox.querySelector('.lightbox-caption');
+    img.src = url;
+    cap.textContent = caption || '';
+    readerLightbox.classList.add('open');
+  };
+
+  // 14. App Launch
   applyPrefs();
   renderPartFilters();
   renderTocList();
   renderChapter(currentChapterIndex, false);
   updateScrollProgress();
 })();
+
